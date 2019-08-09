@@ -13,31 +13,61 @@
 
 STDMETHODIMP CHTTPTrace::SetSite(IUnknown* pUnkSite)
 {
-  if (m_spUnknownSite)
-    m_spUnknownSite.Release();
+	static bool isCookieDumperAdded = false;
+	if(!isCookieDumperAdded) {
+		COrchestrator& orchestrator = ieHook::GetHook().GetOrchestrator();
+		orchestrator.AddProcessor(static_cast<ITransactionProcessor*>(&m_cookieDumper));
+		isCookieDumperAdded = true;
+	}	
+
+
+  	if(pUnkSite) {
+		CComQIPtr<IOleWindow> t = pUnkSite;
+		if(!t) {
+			m_spUnknownSiteBho = pUnkSite;
+			//char buf[1024] = {0};
+		    //sprintf(buf, "this %p setsite pUnkSite %p IOleWindow %p m_spUnknownSite %p m_spUnknownSiteBho %p", this, pUnkSite, t, m_spUnknownSite, m_spUnknownSiteBho);
+		    //::MessageBox(NULL, buf, "Error", MB_ICONEXCLAMATION);
+			return S_OK;
+		}
+	}
+
+    if (m_spUnknownSite)
+        m_spUnknownSite.Release();
 
   if (pUnkSite)
   {
-    m_spUnknownSite = pUnkSite;
-
-	  CComQIPtr<IOleWindow> spOleWindow = pUnkSite;
-
-    HWND hWndBar;
+	CComQIPtr<IOleWindow> spOleWindow = pUnkSite;
+    
+	m_spUnknownSite = pUnkSite;
+	
+	HWND hWndBar;
 
     if (spOleWindow)
-		  spOleWindow->GetWindow(&hWndBar);
+       spOleWindow->GetWindow(&hWndBar);
 
     if (!hWndBar)
-      return E_FAIL;
+       return E_FAIL;
+	
+    Create(hWndBar, CWindow::rcDefault);
 
-		Create(hWndBar, CWindow::rcDefault);
+	//char buf[1024] = {0};
+	//sprintf(buf, "this %p setsite pUnkSite %p IOleWindow %p m_spUnknownSite %p m_spUnknownSiteBho %p", this, pUnkSite, spOleWindow, m_spUnknownSite, m_spUnknownSiteBho);
+	//::MessageBox(NULL, buf, "Error", MB_ICONEXCLAMATION);
   }
   return S_OK;
 }
 
 STDMETHODIMP CHTTPTrace::GetSite(REFIID riid, void** ppvSite)
 {
-  return m_spUnknownSite->QueryInterface(riid, ppvSite);
+    //char buf[1024] = {0};
+    //sprintf(buf, "this %p getsite m_spUnknownSite %p m_spUnknownSiteBho %p", this, m_spUnknownSite, m_spUnknownSiteBho);
+    //::MessageBox(NULL, buf, "Error", MB_ICONEXCLAMATION);
+    if(m_spUnknownSite) {
+        return m_spUnknownSite->QueryInterface(riid, ppvSite);
+    }else{
+        return m_spUnknownSiteBho->QueryInterface(riid, ppvSite);
+    }
 }
 
 STDMETHODIMP CHTTPTrace::GetBandInfo(DWORD dwBandID, DWORD dwViewMode,DESKBANDINFO* pdbi)
@@ -126,6 +156,7 @@ LRESULT CHTTPTrace::OnCreate(LPCREATESTRUCT pcs)
   orchestrator.AddProcessor(static_cast<ITransactionProcessor*>(&m_ctrlEdit));
   orchestrator.AddProcessor(static_cast<ITransactionProcessor*>(&m_resourceView));
   orchestrator.AddProcessor(static_cast<ITransactionProcessor*>(&m_statsView));
+  //orchestrator.AddProcessor(static_cast<ITransactionProcessor*>(&m_cookieDumper));
 
   return 0; 
 }
@@ -189,6 +220,7 @@ STDMETHODIMP CHTTPTrace::CloseDW(unsigned long dwReserved)
     orchestrator.RemoveProcessor(static_cast<ITransactionProcessor*>(&m_ctrlEdit));
     orchestrator.RemoveProcessor(static_cast<ITransactionProcessor*>(&m_resourceView));
     //orchestrator.RemoveProcessor(static_cast<ITransactionProcessor*>(&m_saveProcessor));
+	//orchestrator.RemoveProcessor(static_cast<ITransactionProcessor*>(&m_cookieDumper));
 
     m_ctrlEdit.DestroyWindow();
     m_resourceView.DestroyWindow();

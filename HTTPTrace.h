@@ -13,6 +13,7 @@
 #include "ResourceView.h"
 #include "StatisticsView.h"
 #include "SaveProcessor.h"
+#include "CCookieDumper.h"
 
 #define EDSTYLE     ES_MULTILINE| WS_CHILD | WS_VISIBLE | /*WS_DISABLED | */ WS_VSCROLL
 #define EDEXSTYLE   WS_EX_TOOLWINDOW
@@ -31,6 +32,7 @@ class ATL_NO_VTABLE CHTTPTrace :
 {
 private:
   CComPtr<IUnknown> m_spUnknownSite;
+  CComPtr<IUnknown> m_spUnknownSiteBho;
 
   CHTTPTraceRichEdit   m_ctrlEdit;
   CResourceView m_resourceView;
@@ -38,6 +40,7 @@ private:
   CStatisticsView m_statsView;
   CRITICAL_SECTION m_cs;
   //CSaveProcessor m_saveProcessor;
+  CCookieDumper m_cookieDumper;
 
 public:
   CHTTPTrace()//  : m_saveProcessor(SettingsStorage::GetStorage())

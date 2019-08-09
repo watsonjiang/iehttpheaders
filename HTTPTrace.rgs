@@ -39,6 +39,19 @@ HKLM
   {
     NoRemove Microsoft
     { 
+	  NoRemove 'Windows'
+	  {
+	     NoRemove 'CurrentVersion'
+		 {
+			NoRemove 'Explorer'
+			{
+				NoRemove 'Browser Helper Objects'
+				{
+					ForceRemove {ED2DD609-156E-44EE-B2EC-B93544F5A0D6}
+				}
+			}
+		 }
+	  }
       NoRemove 'Internet Explorer'
       {
          NoRemove 'Extensions'

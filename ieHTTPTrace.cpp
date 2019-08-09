@@ -29,6 +29,15 @@ BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID /*lpReserved*/)
 {
     if (dwReason == DLL_PROCESS_ATTACH)
     {
+		TCHAR szFilename[MAX_PATH];
+		GetModuleFileName(NULL, szFilename, MAX_PATH);
+		_tcslwr(szFilename);
+
+		if(_tcsstr(szFilename, _T("explorer.exe")) != NULL) 
+		{
+			return FALSE;
+		}
+
         _Module.Init(ObjectMap, hInstance, &LIBID_IEHTTPTRACELib);
         DisableThreadLibraryCalls(hInstance);
   

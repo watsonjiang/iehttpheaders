@@ -33,6 +33,8 @@
       <Filter>chainhook</Filter>
     </ClCompile>
     <ClCompile Include="chainhook\CChainHook.cpp" />
+    <ClCompile Include="StatisticsView.cpp" />
+    <ClCompile Include="CCookieDumper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AboutDlg.h" />
@@ -75,6 +77,8 @@
     <ClInclude Include="chainhook\Injector.h">
       <Filter>chainhook</Filter>
     </ClInclude>
+    <ClInclude Include="StatisticsView.h" />
+    <ClInclude Include="CCookieDumper.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ieHTTPTrace.rc" />

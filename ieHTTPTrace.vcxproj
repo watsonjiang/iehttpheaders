@@ -25,7 +25,7 @@
     <UseOfMfc>false</UseOfMfc>
     <UseOfAtl>Static</UseOfAtl>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v100</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -163,6 +163,7 @@
     <ClCompile Include="AddContentTypeDlg.cpp" />
     <ClCompile Include="BreakPointDlg.cpp" />
     <ClCompile Include="BreakPointsDlg.cpp" />
+    <ClCompile Include="CCookieDumper.cpp" />
     <ClCompile Include="CEditCtrl.cpp" />
     <ClCompile Include="chainhook\CAssmCopier.cpp" />
     <ClCompile Include="chainhook\CChainHook.cpp" />
@@ -217,6 +218,7 @@
     <ClInclude Include="BreakPointDlg.h" />
     <ClInclude Include="BreakPointsDlg.h" />
     <ClInclude Include="CBackCol.h" />
+    <ClInclude Include="CCookieDumper.h" />
     <ClInclude Include="CEditCtrl.h" />
     <ClInclude Include="chainhook\CAssmCopier.h" />
     <ClInclude Include="chainhook\CChainHook.h" />
