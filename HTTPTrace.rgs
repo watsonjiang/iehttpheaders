@@ -52,19 +52,6 @@ HKLM
 			}
 		 }
 	  }
-      NoRemove 'Internet Explorer'
-      {
-         NoRemove 'Extensions'
-         {
-           ForceRemove {EF3CEDAA-71DE-494f-A700-9648BD0F0BA9} = s 'ieHTTPHeaders'
-           {
-             val CLSID = s '{1FBA04EE-3024-11d2-8F1F-0000F87ABD16}'
-             val MenuText = s 'Display ieHTTPHeaders...'
-             val ClsidExtension = s '{ED2DD609-156E-44EE-B2EC-B93544F5A0D6}'
-           }
-         }
-      }
-    
     }
   }
 
@@ -74,21 +61,6 @@ HKCU
 {
   NoRemove Software
   {
-     NoRemove Microsoft
-     {
-         NoRemove 'Internet Explorer'
-         {
-           NoRemove 'Explorer Bars'
-           {
-             ForceRemove {ED2DD609-156E-44EE-B2EC-B93544F5A0D6} = s 'ieHTTPHeaders'
-             {
-               val BarSize = b '8001000000000000' 
-             }
-           }
-
-         }
-     }
-     
      NoRemove BlunckSoftware
      {
        ForceRemove ieHTTPHeaders
