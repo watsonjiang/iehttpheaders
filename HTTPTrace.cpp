@@ -16,10 +16,12 @@ STDMETHODIMP CHTTPTrace::SetSite(IUnknown* pUnkSite)
 	static bool isCookieDumperAdded = false;
 	if(!isCookieDumperAdded) {
 		COrchestrator& orchestrator = ieHook::GetHook().GetOrchestrator();
-		orchestrator.AddProcessor(static_cast<ITransactionProcessor*>(&m_cookieDumper));
+		CCookieDumper *cookieDumper = new CCookieDumper();
+		orchestrator.AddProcessor(static_cast<ITransactionProcessor*>(cookieDumper));
 		isCookieDumperAdded = true;
 	}	
-
+	
+    //::MessageBox(NULL, "setsite", "Error", MB_ICONEXCLAMATION);
 
   	if(pUnkSite) {
 		CComQIPtr<IOleWindow> t = pUnkSite;

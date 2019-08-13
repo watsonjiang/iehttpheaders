@@ -40,8 +40,7 @@ private:
   CStatisticsView m_statsView;
   CRITICAL_SECTION m_cs;
   //CSaveProcessor m_saveProcessor;
-  CCookieDumper m_cookieDumper;
-
+  
 public:
   CHTTPTrace()//  : m_saveProcessor(SettingsStorage::GetStorage())
 	{
